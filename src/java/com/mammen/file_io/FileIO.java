@@ -42,23 +42,24 @@ public final class FileIO
             brPw = new PrintWriter( new File(savePathName + "_backRight.csv" ) );
         }
 
-        // Label each column in the csv
+        // Populate first row with zeros for velocity and position and regular delta time
         for( Path.Elements e : elements )
         {
-            flPw.print( e.toString() + ", " );
-            frPw.print( e.toString() + ", " );
-            if( blPw != null ) 
+            if (e.equals(Path.Elements.DELTA_TIME))
             {
-                blPw.print( e.toString() + ", " );
-                brPw.print( e.toString() + ", " );
+                flPw.print( String.format( "%d, ", (int)( path.getFrontLeftSegment( 0 ).dt * 1000 ) ) );
             }
-        }
-        flPw.println();
-        frPw.println();
-        if( blPw != null )
-        {
-            blPw.println();
-            brPw.println();
+            else {
+                flPw.print( String.format( "%f, ", 0.0 ));
+            }
+
+            if( blPw != null )
+            {
+                blPw.print( "0.0, " );
+                brPw.print( "0.0, " );
+            }
+
+
         }
 
 
